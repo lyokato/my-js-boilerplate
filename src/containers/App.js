@@ -4,14 +4,7 @@ import Header from './Header'
 import Footer from './Footer'
 import LoginForm from './LoginForm'
 
-@connect(
-  state => {
-    return {
-      auth: state.auth
-    }
-  }
-)
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <div className="mld-layout">
@@ -24,3 +17,4 @@ export default class App extends Component {
     )
   }
 }
+export default connect()(App)

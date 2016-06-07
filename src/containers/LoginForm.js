@@ -1,6 +1,17 @@
 import React, { Component, PropTypes } from 'react'
+import { findDOMNode } from 'react-dom'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as LoginActions from '../actions/login'
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
+
+  handleClick(e) {
+    let username = findDOMNode(this.refs.username).value.trim()
+    let passwprd = findDOMNode(this.refs.password).value.trim()
+    this.props.login(username, password)
+    e.preventDefault()
+  }
 
   render() {
     return (
@@ -18,19 +29,19 @@ export default class LoginForm extends Component {
   <div className="mdl-card__supporting-text mdl-card--border">
    
     <div className="mdl-textfield mdl-js-textfield">
-      <input className="mdl-textfield__input" type="text" id="username" name="username" />
+      <input className="mdl-textfield__input" type="text" id="username" name="username" ref="username" />
       <label className="mdl-textfield__label" htmlFor="username" name="password">Username</label>
     </div>
 
     <div className="mdl-textfield mdl-js-textfield">
-      <input className="mdl-textfield__input" type="password" id="password" name="password" />
+      <input className="mdl-textfield__input" type="password" id="password" name="password" ref="password"/>
       <label className="mdl-textfield__label" htmlFor="password">Password</label>
     </div>
 
   </div>
 
   <div className="mdl-card__actions mdl-card--border">
-    <button type="submit" className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">Login</button>
+    <button type="submit" className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect" onClick={this.handleClick.bind(this)}>Submit</button>
   </div>
 
 </div>
@@ -38,3 +49,14 @@ export default class LoginForm extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {}
+}
+
+function mapDispatchToProps(dispatch) {
+  return { 
+    ...bindActionCreators(LoginActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

@@ -82,7 +82,7 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _reducers = __webpack_require__(209);
+	var _reducers = __webpack_require__(211);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -22749,11 +22749,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _dec, _class;
 
 	var _react = __webpack_require__(2);
 
@@ -22781,11 +22778,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var App = (_dec = (0, _reactRedux.connect)(function (state) {
-	  return {
-	    auth: state.auth
-	  };
-	}), _dec(_class = function (_Component) {
+	var App = function (_Component) {
 	  _inherits(App, _Component);
 
 	  function App() {
@@ -22812,8 +22805,9 @@
 	  }]);
 
 	  return App;
-	}(_react.Component)) || _class);
-	exports.default = App;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)()(App);
 
 /***/ },
 /* 206 */
@@ -22824,7 +22818,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -22887,7 +22880,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -22945,18 +22937,31 @@
 /* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = undefined;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(52);
+
+	var _redux = __webpack_require__(38);
+
+	var _reactRedux = __webpack_require__(182);
+
+	var _login = __webpack_require__(209);
+
+	var LoginActions = _interopRequireWildcard(_login);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22976,56 +22981,64 @@
 	  }
 
 	  _createClass(LoginForm, [{
-	    key: "render",
+	    key: 'handleClick',
+	    value: function handleClick(e) {
+	      var username = (0, _reactDom.findDOMNode)(this.refs.username).value.trim();
+	      var passwprd = (0, _reactDom.findDOMNode)(this.refs.password).value.trim();
+	      this.props.login(username, password);
+	      e.preventDefault();
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "mdl-card mdl-shadow--2dp" },
+	        'div',
+	        { className: 'mdl-card mdl-shadow--2dp' },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "mdl-card__title" },
+	          'div',
+	          { className: 'mdl-card__title' },
 	          _react2.default.createElement(
-	            "h2",
-	            { className: "mdl-card__title-text" },
-	            "Boilerplate :: Login"
+	            'h2',
+	            { className: 'mdl-card__title-text' },
+	            'Boilerplate :: Login'
 	          )
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "mdl-card__supporting-text mdl-card-border" },
-	          "Input your account information"
+	          'div',
+	          { className: 'mdl-card__supporting-text mdl-card-border' },
+	          'Input your account information'
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "mdl-card__supporting-text mdl-card--border" },
+	          'div',
+	          { className: 'mdl-card__supporting-text mdl-card--border' },
 	          _react2.default.createElement(
-	            "div",
-	            { className: "mdl-textfield mdl-js-textfield" },
-	            _react2.default.createElement("input", { className: "mdl-textfield__input", type: "text", id: "username", name: "username" }),
+	            'div',
+	            { className: 'mdl-textfield mdl-js-textfield' },
+	            _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'text', id: 'username', name: 'username', ref: 'username' }),
 	            _react2.default.createElement(
-	              "label",
-	              { className: "mdl-textfield__label", htmlFor: "username", name: "password" },
-	              "Username"
+	              'label',
+	              { className: 'mdl-textfield__label', htmlFor: 'username', name: 'password' },
+	              'Username'
 	            )
 	          ),
 	          _react2.default.createElement(
-	            "div",
-	            { className: "mdl-textfield mdl-js-textfield" },
-	            _react2.default.createElement("input", { className: "mdl-textfield__input", type: "password", id: "password", name: "password" }),
+	            'div',
+	            { className: 'mdl-textfield mdl-js-textfield' },
+	            _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'password', id: 'password', name: 'password', ref: 'password' }),
 	            _react2.default.createElement(
-	              "label",
-	              { className: "mdl-textfield__label", htmlFor: "password" },
-	              "Password"
+	              'label',
+	              { className: 'mdl-textfield__label', htmlFor: 'password' },
+	              'Password'
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "mdl-card__actions mdl-card--border" },
+	          'div',
+	          { className: 'mdl-card__actions mdl-card--border' },
 	          _react2.default.createElement(
-	            "button",
-	            { type: "submit", className: "mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect" },
-	            "Login"
+	            'button',
+	            { type: 'submit', className: 'mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect', onClick: this.handleClick.bind(this) },
+	            'Submit'
 	          )
 	        )
 	      );
@@ -23035,10 +23048,102 @@
 	  return LoginForm;
 	}(_react.Component);
 
-	exports.default = LoginForm;
+	function mapStateToProps(state) {
+	  return {};
+	}
+
+	function mapDispatchToProps(dispatch) {
+	  return _extends({}, (0, _redux.bindActionCreators)(LoginActions, dispatch));
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 /***/ },
 /* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.login = login;
+	exports.logout = logout;
+
+	var _ActionTypes = __webpack_require__(210);
+
+	var types = _interopRequireWildcard(_ActionTypes);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	/*
+	const checkResponseStatus = function(res) {
+	  if (!res.ok) {
+	    throw Error(res.statusText)
+	  }
+	  return res
+	}
+
+	const onAPIFailed = function(dispatch) {
+	  return err => {
+	      dispatch() 
+	  }
+	}
+	*/
+
+	function receivedAuthToken(token) {
+	  return {
+	    type: types.LOGIN_COMPLETED,
+	    token: token
+	  };
+	}
+
+	function login(username, password) {
+	  return function (dispatch) {
+	    dispatch({ type: types.LOGIN_REQUESTED });
+	    setTimeout(function () {
+	      dispatch(receivedAuthToken("dummy"));
+	    }, 1000);
+	    /*
+	    return fetch(LOGIN_ENDPOINT)
+	    .then(checkResponseStatus)
+	    .then(res => res.json())
+	    .then(json => dispatch(receiveLoginSuccess()))
+	    .catch(onAPIFailed(dispatch))
+	    */
+	  };
+	}
+
+	function logout() {
+	  return function (dispatch) {
+	    dispatch({ type: types.LOGOUT_REQUESTED });
+	    setTimeout(function () {
+	      dispatch({
+	        type: types.LOGOUT_COMPLETED
+	      });
+	    }, 1000);
+	  };
+	}
+
+/***/ },
+/* 210 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var LOGIN_REQUESTED = exports.LOGIN_REQUESTED = 'LOGIN_REQUESTED';
+	var LOGIN_COMPLETED = exports.LOGIN_COMPLETED = 'LOGIN_COMPLETED';
+	var LOGIN_FAILED = exports.LOGIN_FAILED = 'LOGIN_FAILED';
+
+	var LOGOUT_REQUESTED = exports.LOGOUT_REQUESTED = 'LOGOUT_REQUESTED';
+	var LOGOUT_COMPLETED = exports.LOGOUT_COMPLETED = 'LOGOUT_COMPLETED';
+	var LOGOUT_FAILED = exports.LOGOUT_FAILED = 'LOGOUT_FAILED';
+
+/***/ },
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23049,7 +23154,7 @@
 
 	var _redux = __webpack_require__(38);
 
-	var _login = __webpack_require__(210);
+	var _login = __webpack_require__(212);
 
 	var _login2 = _interopRequireDefault(_login);
 
@@ -23060,7 +23165,7 @@
 	});
 
 /***/ },
-/* 210 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23070,7 +23175,7 @@
 	});
 	exports.default = login;
 
-	var _ActionTypes = __webpack_require__(211);
+	var _ActionTypes = __webpack_require__(210);
 
 	var initialState = {
 	  token: ""
@@ -23081,25 +23186,22 @@
 	  var action = arguments[1];
 
 	  switch (action.type) {
+	    case _ActionTypes.LOGIN_REQUESTED:
+	      return Object.assign({}, state, {
+	        token: ""
+	      });
 	    case _ActionTypes.LOGIN_COMPLETED:
-	      return {
+	      return Object.assign({}, state, {
 	        token: action.token
-	      };
+	      });
+	    case _ActionTypes.LOGIN_FAILED:
+	      return Object.assign({}, state, {
+	        token: ""
+	      });
 	    default:
 	      return state;
 	  }
 	}
-
-/***/ },
-/* 211 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var LOGIN_COMPLETED = exports.LOGIN_COMPLETED = 'LOGIN_COMPLETED';
 
 /***/ }
 /******/ ]);
