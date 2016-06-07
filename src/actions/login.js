@@ -15,10 +15,11 @@ const onAPIFailed = function(dispatch) {
 }
 */
 
-function receivedAuthToken(token) {
+function receivedAuthToken(token, username) {
   return {
     type: types.LOGIN_COMPLETED, 
-    token: token
+    token: token,
+    username: username
   }
 }
 
@@ -26,8 +27,8 @@ export function login(username, password) {
   return dispatch => {
     dispatch({type: types.LOGIN_REQUESTED})
     setTimeout(() => {
-      dispatch(receivedAuthToken("dummy")) 
-    }, 1000)
+      dispatch(receivedAuthToken("dummy-token", "dummy-username")) 
+    }, 200)
     /*
     return fetch(LOGIN_ENDPOINT)
     .then(checkResponseStatus)
@@ -45,6 +46,6 @@ export function logout() {
       dispatch({
         type: types.LOGOUT_COMPLETED 
       }) 
-    }, 1000)
+    }, 200)
   }
 }

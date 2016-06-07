@@ -82,7 +82,7 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _reducers = __webpack_require__(211);
+	var _reducers = __webpack_require__(213);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -22770,6 +22770,14 @@
 
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 
+	var _Dashboard = __webpack_require__(211);
+
+	var _Dashboard2 = _interopRequireDefault(_Dashboard);
+
+	var _Drawer = __webpack_require__(212);
+
+	var _Drawer2 = _interopRequireDefault(_Drawer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22790,16 +22798,24 @@
 	  _createClass(App, [{
 	    key: 'render',
 	    value: function render() {
+
+	      var content = _react2.default.createElement(_LoginForm2.default, null);
+	      var layoutClass = "mdl-layout mdl-layout--fixed-header";
+	      var drawer = null;
+
+	      if (this.props.loggedIn) {
+	        drawer = _react2.default.createElement(_Drawer2.default, null);
+	        content = _react2.default.createElement(_Dashboard2.default, null);
+	        layoutClass = "mdl-layout mdl-layout--fixed-header mdl-layout--fixed-drawer";
+	      }
+
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'mld-layout' },
-	        _react2.default.createElement(_Header2.default, { title: 'MyApp' }),
-	        _react2.default.createElement(
-	          'main',
-	          { className: 'mdl-layout__content' },
-	          _react2.default.createElement(_LoginForm2.default, null)
-	        ),
-	        _react2.default.createElement(_Footer2.default, { copyright: 'MyApp' })
+	        { className: layoutClass },
+	        _react2.default.createElement(_Header2.default, { title: 'Boilerplate' }),
+	        drawer,
+	        content,
+	        _react2.default.createElement(_Footer2.default, { copyright: 'Boilerplate' })
 	      );
 	    }
 	  }]);
@@ -22807,7 +22823,13 @@
 	  return App;
 	}(_react.Component);
 
-	exports.default = (0, _reactRedux.connect)()(App);
+	function mapStateToProps(state) {
+	  return {
+	    loggedIn: state.login.loggedIn
+	  };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
 /***/ },
 /* 206 */
@@ -22992,53 +23014,57 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'mdl-card mdl-shadow--2dp' },
+	        'main',
+	        { className: 'mdl-layout__content' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'mdl-card__title' },
-	          _react2.default.createElement(
-	            'h2',
-	            { className: 'mdl-card__title-text' },
-	            'Boilerplate :: Login'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'mdl-card__supporting-text mdl-card-border' },
-	          'Input your account information'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'mdl-card__supporting-text mdl-card--border' },
+	          { className: 'mdl-card mdl-shadow--2dp' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'mdl-textfield mdl-js-textfield' },
-	            _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'text', id: 'username', name: 'username', ref: 'username' }),
+	            { className: 'mdl-card__title' },
 	            _react2.default.createElement(
-	              'label',
-	              { className: 'mdl-textfield__label', htmlFor: 'username', name: 'password' },
-	              'Username'
+	              'h2',
+	              { className: 'mdl-card__title-text' },
+	              'Boilerplate :: Login'
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'mdl-textfield mdl-js-textfield' },
-	            _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'password', id: 'password', name: 'password', ref: 'password' }),
-	            _react2.default.createElement(
-	              'label',
-	              { className: 'mdl-textfield__label', htmlFor: 'password' },
-	              'Password'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'mdl-card__actions mdl-card--border' },
+	            { className: 'mdl-card__supporting-text mdl-card--border' },
+	            'Input your account information'
+	          ),
 	          _react2.default.createElement(
-	            'button',
-	            { type: 'submit', className: 'mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect', onClick: this.handleClick.bind(this) },
-	            'Submit'
+	            'div',
+	            { className: 'mdl-card__supporting-text mdl-card--border' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mdl-textfield mdl-js-textfield' },
+	              _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'text', id: 'username', name: 'username', ref: 'username' }),
+	              _react2.default.createElement(
+	                'label',
+	                { className: 'mdl-textfield__label', htmlFor: 'username', name: 'password' },
+	                'Username'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mdl-textfield mdl-js-textfield' },
+	              _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'password', id: 'password', name: 'password', ref: 'password' }),
+	              _react2.default.createElement(
+	                'label',
+	                { className: 'mdl-textfield__label', htmlFor: 'password' },
+	                'Password'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'mdl-card__actions mdl-card--border' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', className: 'mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect', onClick: this.handleClick.bind(this) },
+	              'Submit'
+	            )
 	          )
 	        )
 	      );
@@ -23091,10 +23117,11 @@
 	}
 	*/
 
-	function receivedAuthToken(token) {
+	function receivedAuthToken(token, username) {
 	  return {
 	    type: types.LOGIN_COMPLETED,
-	    token: token
+	    token: token,
+	    username: username
 	  };
 	}
 
@@ -23102,8 +23129,8 @@
 	  return function (dispatch) {
 	    dispatch({ type: types.LOGIN_REQUESTED });
 	    setTimeout(function () {
-	      dispatch(receivedAuthToken("dummy"));
-	    }, 1000);
+	      dispatch(receivedAuthToken("dummy-token", "dummy-username"));
+	    }, 200);
 	    /*
 	    return fetch(LOGIN_ENDPOINT)
 	    .then(checkResponseStatus)
@@ -23121,7 +23148,7 @@
 	      dispatch({
 	        type: types.LOGOUT_COMPLETED
 	      });
-	    }, 1000);
+	    }, 200);
 	  };
 	}
 
@@ -23152,9 +23179,159 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(52);
+
 	var _redux = __webpack_require__(38);
 
-	var _login = __webpack_require__(212);
+	var _reactRedux = __webpack_require__(182);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Dashboard = function (_Component) {
+	  _inherits(Dashboard, _Component);
+
+	  function Dashboard() {
+	    _classCallCheck(this, Dashboard);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).apply(this, arguments));
+	  }
+
+	  _createClass(Dashboard, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'main',
+	        { className: 'mdl-layout__content' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'mdl-card mdl-shadow--2dp' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'mdl-card__title' },
+	            _react2.default.createElement(
+	              'h2',
+	              { className: 'mdl-card__title-text' },
+	              'Boilerplate :: Dashboard'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Dashboard;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)()(Dashboard);
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(52);
+
+	var _redux = __webpack_require__(38);
+
+	var _reactRedux = __webpack_require__(182);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Drawer = function (_Component) {
+	  _inherits(Drawer, _Component);
+
+	  function Drawer() {
+	    _classCallCheck(this, Drawer);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Drawer).apply(this, arguments));
+	  }
+
+	  _createClass(Drawer, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'mdl-layout__drawer' },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'mdl-layout-title' },
+	          'Menu'
+	        ),
+	        _react2.default.createElement(
+	          'nav',
+	          { className: 'mdl-navigation' },
+	          _react2.default.createElement(
+	            'a',
+	            { className: 'mdl-navigation__link', href: '' },
+	            'Link'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { className: 'mdl-navigation__link', href: '' },
+	            'Link'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { className: 'mdl-navigation__link', href: '' },
+	            'Link'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { className: 'mdl-navigation__link', href: '' },
+	            'Link'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Drawer;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)()(Drawer);
+
+/***/ },
+/* 213 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(38);
+
+	var _login = __webpack_require__(214);
 
 	var _login2 = _interopRequireDefault(_login);
 
@@ -23165,7 +23342,7 @@
 	});
 
 /***/ },
-/* 212 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23178,7 +23355,9 @@
 	var _ActionTypes = __webpack_require__(210);
 
 	var initialState = {
-	  token: ""
+	  loggedIn: false,
+	  auth_token: "",
+	  username: ""
 	};
 
 	function login() {
@@ -23188,15 +23367,21 @@
 	  switch (action.type) {
 	    case _ActionTypes.LOGIN_REQUESTED:
 	      return Object.assign({}, state, {
-	        token: ""
+	        loggedIn: false,
+	        auth_token: "",
+	        username: ""
 	      });
 	    case _ActionTypes.LOGIN_COMPLETED:
 	      return Object.assign({}, state, {
-	        token: action.token
+	        loggedIn: true,
+	        auth_token: action.token,
+	        username: action.username
 	      });
 	    case _ActionTypes.LOGIN_FAILED:
 	      return Object.assign({}, state, {
-	        token: ""
+	        loggedIn: false,
+	        auth_token: "",
+	        username: ""
 	      });
 	    default:
 	      return state;

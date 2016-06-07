@@ -5,22 +5,30 @@ import {
 } from '../constants/ActionTypes'
 
 const initialState = {
-  token: ""
+  loggedIn: false,
+  auth_token: "",
+  username: ""
 }
 
 export default function login(state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQUESTED:
       return Object.assign({}, state, {
-        token: "" 
+        loggedIn: false,
+        auth_token: "",
+        username: ""
       })
     case LOGIN_COMPLETED: 
       return Object.assign({}, state, {
-        token: action.token 
+        loggedIn: true,
+        auth_token: action.token,
+        username: action.username
       })
     case LOGIN_FAILED: 
       return Object.assign({}, state, {
-        token: ""
+        loggedIn: false,
+        auth_token: "",
+        username: ""
       })
     default:
       return state
