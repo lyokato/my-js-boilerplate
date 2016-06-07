@@ -22986,18 +22986,14 @@
 	          { className: "mdl-card__title" },
 	          _react2.default.createElement(
 	            "h2",
-	            { clssName: "mdl-card__title-text" },
+	            { className: "mdl-card__title-text" },
 	            "Boilerplate :: Login"
 	          )
 	        ),
 	        _react2.default.createElement(
 	          "div",
 	          { className: "mdl-card__supporting-text mdl-card-border" },
-	          _react2.default.createElement(
-	            "p",
-	            null,
-	            "Input your account information"
-	          )
+	          "Input your account information"
 	        ),
 	        _react2.default.createElement(
 	          "div",
@@ -23028,7 +23024,7 @@
 	          { className: "mdl-card__actions mdl-card--border" },
 	          _react2.default.createElement(
 	            "button",
-	            { type: "submit", className: "mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect" },
+	            { type: "submit", className: "mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect" },
 	            "Login"
 	          )
 	        )

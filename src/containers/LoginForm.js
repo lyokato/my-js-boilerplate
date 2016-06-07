@@ -7,11 +7,11 @@ export default class LoginForm extends Component {
 <div className="mdl-card mdl-shadow--2dp">
 
   <div className="mdl-card__title">
-    <h2 clssName="mdl-card__title-text">Boilerplate :: Login</h2>
+    <h2 className="mdl-card__title-text">Boilerplate :: Login</h2>
   </div>
 
   <div className="mdl-card__supporting-text mdl-card-border">
-    <p>Input your account information</p> 
+    Input your account information
   </div>
 
   
@@ -30,7 +30,7 @@ export default class LoginForm extends Component {
   </div>
 
   <div className="mdl-card__actions mdl-card--border">
-    <button type="submit" className="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect">Login</button>
+    <button type="submit" className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">Login</button>
   </div>
 
 </div>
