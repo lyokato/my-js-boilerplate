@@ -28,7 +28,7 @@ export function login(username, password) {
     dispatch({type: types.LOGIN_REQUESTED})
     setTimeout(() => {
       dispatch(receivedAuthToken("dummy-token", "dummy-username")) 
-    }, 200)
+    }, 1000)
     /*
     return fetch(LOGIN_ENDPOINT)
     .then(checkResponseStatus)
@@ -46,6 +46,6 @@ export function logout() {
       dispatch({
         type: types.LOGOUT_COMPLETED 
       }) 
-    }, 200)
+    }, 1000)
   }
 }

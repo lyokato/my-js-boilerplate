@@ -15,8 +15,6 @@ class LoginForm extends Component {
 
   render() {
     return (
-<main className="mdl-layout__content">
-
   <div className="mdl-card mdl-shadow--2dp">
 
     <div className="mdl-card__title">
@@ -43,18 +41,24 @@ class LoginForm extends Component {
     </div>
 
     <div className="mdl-card__actions mdl-card--border">
-      <button type="submit" className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect" onClick={this.handleClick.bind(this)}>Submit</button>
+      {(() => {
+        if (this.props.inProgress) {
+          return <button type="submit" className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect" disabled>SIGN IN</button>
+        } else {
+          return <button type="submit" className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect" onClick={this.handleClick.bind(this)}>SIGN IN</button>
+        }
+      })()}
     </div>
 
   </div>
-
-</main>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    inProgress: state.auth.inProgress 
+  }
 }
 
 function mapDispatchToProps(dispatch) {

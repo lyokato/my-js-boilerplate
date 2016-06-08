@@ -7,13 +7,11 @@ class Dashboard extends Component {
 
   render() {
     return (
-<main className="mdl-layout__content">
-  <div className="mdl-card mdl-shadow--2dp">
-    <div className="mdl-card__title">
-      <h2 className="mdl-card__title-text">Boilerplate :: Dashboard</h2>
-    </div>
+<div className="mdl-card mdl-shadow--2dp">
+  <div className="mdl-card__title">
+    <h2 className="mdl-card__title-text">Boilerplate :: Dashboard</h2>
   </div>
-</main>
+</div>
     )
   }
 }

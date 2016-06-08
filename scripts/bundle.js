@@ -22800,21 +22800,23 @@
 	    value: function render() {
 
 	      var content = _react2.default.createElement(_LoginForm2.default, null);
-	      var layoutClass = "mdl-layout mdl-layout--fixed-header";
 	      var drawer = null;
 
 	      if (this.props.loggedIn) {
 	        drawer = _react2.default.createElement(_Drawer2.default, null);
 	        content = _react2.default.createElement(_Dashboard2.default, null);
-	        layoutClass = "mdl-layout mdl-layout--fixed-header mdl-layout--fixed-drawer";
 	      }
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: layoutClass },
+	        { className: 'mdl-layout mdl-js-layout mdl-layout--fixed-header' },
 	        _react2.default.createElement(_Header2.default, { title: 'Boilerplate' }),
 	        drawer,
-	        content,
+	        _react2.default.createElement(
+	          'main',
+	          { className: 'mdl-layout__content' },
+	          content
+	        ),
 	        _react2.default.createElement(_Footer2.default, { copyright: 'Boilerplate' })
 	      );
 	    }
@@ -22825,7 +22827,7 @@
 
 	function mapStateToProps(state) {
 	  return {
-	    loggedIn: state.login.loggedIn
+	    loggedIn: state.auth.loggedIn
 	  };
 	}
 
@@ -22835,17 +22837,29 @@
 /* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(182);
+
+	var _redux = __webpack_require__(38);
+
+	var _login = __webpack_require__(209);
+
+	var LoginActions = _interopRequireWildcard(_login);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22865,19 +22879,67 @@
 	  }
 
 	  _createClass(Header, [{
-	    key: "render",
+	    key: 'handleLogoutClick',
+	    value: function handleLogoutClick(e) {
+	      this.props.logout();
+	      e.preventDefault();
+	    }
+	  }, {
+	    key: 'handleSignupClick',
+	    value: function handleSignupClick(e) {
+	      this.props.logout();
+	      e.preventDefault();
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
-	        "header",
-	        { className: "mdl-layout__header" },
+	        'header',
+	        { className: 'mdl-layout__header' },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "mdl-layout__header-row" },
+	          'div',
+	          { className: 'mdl-layout__header-row' },
 	          _react2.default.createElement(
-	            "span",
-	            { className: "mdl-layout-title" },
+	            'span',
+	            { className: 'mdl-layout-title' },
 	            this.props.title
-	          )
+	          ),
+	          _react2.default.createElement('div', { className: 'mdl-layout-spacer' }),
+	          function () {
+	            if (_this2.props.loggedIn) {
+	              return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  _this2.props.username
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'mdl-button mdl-js-button mdl-js-ripple-effect', onClick: _this2.handleLogoutClick.bind(_this2) },
+	                  'Logout'
+	                )
+	              );
+	            } else {
+	              return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  'Guest'
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'mdl-button mdl-js-button mdl-js-ripple-effect', onClick: _this2.handleSignupClick.bind(_this2) },
+	                  'Sign Up'
+	                )
+	              );
+	            }
+	          }()
 	        )
 	      );
 	    }
@@ -22886,12 +22948,22 @@
 	  return Header;
 	}(_react.Component);
 
-	exports.default = Header;
-
-
 	Header.propTypes = {
 	  title: _react.PropTypes.string.isRequired
 	};
+
+	function mapStateToProps(state) {
+	  return {
+	    loggedIn: state.auth.loggedIn,
+	    username: state.auth.username
+	  };
+	}
+
+	function mapDispatchToProps(dispatch) {
+	  return _extends({}, (0, _redux.bindActionCreators)(LoginActions, dispatch));
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Header);
 
 /***/ },
 /* 207 */
@@ -23013,59 +23085,67 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
-	        'main',
-	        { className: 'mdl-layout__content' },
+	        'div',
+	        { className: 'mdl-card mdl-shadow--2dp' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'mdl-card mdl-shadow--2dp' },
+	          { className: 'mdl-card__title' },
+	          _react2.default.createElement(
+	            'h2',
+	            { className: 'mdl-card__title-text' },
+	            'Boilerplate :: Login'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'mdl-card__supporting-text mdl-card--border' },
+	          'Input your account information'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'mdl-card__supporting-text mdl-card--border' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'mdl-card__title' },
+	            { className: 'mdl-textfield mdl-js-textfield' },
+	            _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'text', id: 'username', name: 'username', ref: 'username' }),
 	            _react2.default.createElement(
-	              'h2',
-	              { className: 'mdl-card__title-text' },
-	              'Boilerplate :: Login'
+	              'label',
+	              { className: 'mdl-textfield__label', htmlFor: 'username', name: 'password' },
+	              'Username'
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'mdl-card__supporting-text mdl-card--border' },
-	            'Input your account information'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mdl-card__supporting-text mdl-card--border' },
+	            { className: 'mdl-textfield mdl-js-textfield' },
+	            _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'password', id: 'password', name: 'password', ref: 'password' }),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'mdl-textfield mdl-js-textfield' },
-	              _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'text', id: 'username', name: 'username', ref: 'username' }),
-	              _react2.default.createElement(
-	                'label',
-	                { className: 'mdl-textfield__label', htmlFor: 'username', name: 'password' },
-	                'Username'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'mdl-textfield mdl-js-textfield' },
-	              _react2.default.createElement('input', { className: 'mdl-textfield__input', type: 'password', id: 'password', name: 'password', ref: 'password' }),
-	              _react2.default.createElement(
-	                'label',
-	                { className: 'mdl-textfield__label', htmlFor: 'password' },
-	                'Password'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mdl-card__actions mdl-card--border' },
-	            _react2.default.createElement(
-	              'button',
-	              { type: 'submit', className: 'mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect', onClick: this.handleClick.bind(this) },
-	              'Submit'
+	              'label',
+	              { className: 'mdl-textfield__label', htmlFor: 'password' },
+	              'Password'
 	            )
 	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'mdl-card__actions mdl-card--border' },
+	          function () {
+	            if (_this2.props.inProgress) {
+	              return _react2.default.createElement(
+	                'button',
+	                { type: 'submit', className: 'mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect', disabled: true },
+	                'SIGN IN'
+	              );
+	            } else {
+	              return _react2.default.createElement(
+	                'button',
+	                { type: 'submit', className: 'mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect', onClick: _this2.handleClick.bind(_this2) },
+	                'SIGN IN'
+	              );
+	            }
+	          }()
 	        )
 	      );
 	    }
@@ -23075,7 +23155,9 @@
 	}(_react.Component);
 
 	function mapStateToProps(state) {
-	  return {};
+	  return {
+	    inProgress: state.auth.inProgress
+	  };
 	}
 
 	function mapDispatchToProps(dispatch) {
@@ -23130,7 +23212,7 @@
 	    dispatch({ type: types.LOGIN_REQUESTED });
 	    setTimeout(function () {
 	      dispatch(receivedAuthToken("dummy-token", "dummy-username"));
-	    }, 200);
+	    }, 1000);
 	    /*
 	    return fetch(LOGIN_ENDPOINT)
 	    .then(checkResponseStatus)
@@ -23148,7 +23230,7 @@
 	      dispatch({
 	        type: types.LOGOUT_COMPLETED
 	      });
-	    }, 200);
+	    }, 1000);
 	  };
 	}
 
@@ -23212,19 +23294,15 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'main',
-	        { className: 'mdl-layout__content' },
+	        'div',
+	        { className: 'mdl-card mdl-shadow--2dp' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'mdl-card mdl-shadow--2dp' },
+	          { className: 'mdl-card__title' },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'mdl-card__title' },
-	            _react2.default.createElement(
-	              'h2',
-	              { className: 'mdl-card__title-text' },
-	              'Boilerplate :: Dashboard'
-	            )
+	            'h2',
+	            { className: 'mdl-card__title-text' },
+	            'Boilerplate :: Dashboard'
 	          )
 	        )
 	      );
@@ -23291,22 +23369,22 @@
 	          { className: 'mdl-navigation' },
 	          _react2.default.createElement(
 	            'a',
-	            { className: 'mdl-navigation__link', href: '' },
+	            { className: 'mdl-navigation__link', href: '#' },
 	            'Link'
 	          ),
 	          _react2.default.createElement(
 	            'a',
-	            { className: 'mdl-navigation__link', href: '' },
+	            { className: 'mdl-navigation__link', href: '#' },
 	            'Link'
 	          ),
 	          _react2.default.createElement(
 	            'a',
-	            { className: 'mdl-navigation__link', href: '' },
+	            { className: 'mdl-navigation__link', href: '#' },
 	            'Link'
 	          ),
 	          _react2.default.createElement(
 	            'a',
-	            { className: 'mdl-navigation__link', href: '' },
+	            { className: 'mdl-navigation__link', href: '#' },
 	            'Link'
 	          )
 	        )
@@ -23331,18 +23409,19 @@
 
 	var _redux = __webpack_require__(38);
 
-	var _login = __webpack_require__(214);
+	var _auth = __webpack_require__(215);
 
-	var _login2 = _interopRequireDefault(_login);
+	var _auth2 = _interopRequireDefault(_auth);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = (0, _redux.combineReducers)({
-	  login: _login2.default
+	  auth: _auth2.default
 	});
 
 /***/ },
-/* 214 */
+/* 214 */,
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23350,39 +23429,59 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = login;
+	exports.default = auth;
 
 	var _ActionTypes = __webpack_require__(210);
 
 	var initialState = {
+	  inProgress: false,
 	  loggedIn: false,
 	  auth_token: "",
 	  username: ""
 	};
 
-	function login() {
+	function auth() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
 	  var action = arguments[1];
 
 	  switch (action.type) {
 	    case _ActionTypes.LOGIN_REQUESTED:
 	      return Object.assign({}, state, {
+	        inProgress: true,
 	        loggedIn: false,
 	        auth_token: "",
 	        username: ""
 	      });
 	    case _ActionTypes.LOGIN_COMPLETED:
 	      return Object.assign({}, state, {
+	        inProgress: false,
 	        loggedIn: true,
 	        auth_token: action.token,
 	        username: action.username
 	      });
 	    case _ActionTypes.LOGIN_FAILED:
 	      return Object.assign({}, state, {
+	        inProgress: false,
 	        loggedIn: false,
 	        auth_token: "",
 	        username: ""
 	      });
+	    case _ActionTypes.LOGOUT_REQUESTED:
+	      return Object.assign({}, state, {
+	        inProgress: true
+	      });
+	    case _ActionTypes.LOGOUT_COMPLETED:
+	      return Object.assign({}, state, {
+	        inProgress: false,
+	        loggedIn: false,
+	        auth_token: "",
+	        username: ""
+	      });
+	    case _ActionTypes.LOGOUT_FAILED:
+	      return Object.assign({}, state, {
+	        inProgress: false
+	      });
+
 	    default:
 	      return state;
 	  }
